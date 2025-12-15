@@ -59,6 +59,7 @@
         cacert
         nodejs_22
         python
+        libcap
       ];
 
       ld-lib-path = pkgs.lib.makeLibraryPath deps;

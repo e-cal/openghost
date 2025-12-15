@@ -1,0 +1,10 @@
+[project]
+name = "openghost"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy==1.26.4",
+    "picamera2>=0.3.33",
+    "py5>=0.10.6a0",
+]
