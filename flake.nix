@@ -37,6 +37,9 @@
         pyqt6
         pip
         uv
+        opencv4
+        (ps.toPythonModule pkgs.libcamera)
+        (ps.toPythonModule pkgs.pykms)
       ]);
       deps = with pkgs; [
         clang
@@ -60,10 +63,24 @@
         nodejs_22
         python
         libcap
+        jdk
+        xorg.libX11
+        xorg.libXext
+        xorg.libXi
+        xorg.libXrandr
+        xorg.libXrender
+        xorg.libXxf86vm
+        xorg.libXcursor
+        xorg.libXinerama
+        libcamera
       ];
 
       ld-lib-path = pkgs.lib.makeLibraryPath deps;
       lib-path = pkgs.lib.makeLibraryPath [ pkgs.cudatoolkit ];
+      python-site-packages = pkgs.lib.concatStringsSep ":" [
+        "${pkgs.libcamera}/lib/python${pkgs.python312.pythonVersion}/site-packages"
+        "${pkgs.pykms}/lib/python${pkgs.python312.pythonVersion}/site-packages"
+      ];
     in {
       packages.${system}.fhsEnvironment = pkgs.buildFHSUserEnv {
         name = "OpenGhost";
@@ -77,6 +94,7 @@
           export LIBRARY_PATH=${lib-path}:$LIBRARY_PATH;
           export CUDA_PATH=${pkgs.cudatoolkit};
           export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+          export PYTHONPATH=${python-site-packages}:$PYTHONPATH
         '';
       };
 
@@ -89,6 +107,7 @@
           export LIBRARY_PATH=${lib-path}:$LIBRARY_PATH
           export CUDA_PATH=${pkgs.cudatoolkit}
           export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+          export PYTHONPATH=${python-site-packages}:$PYTHONPATH
         '';
       };
 

@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
+    "mediapipe>=0.10.31",
     "numpy==1.26.4",
+    "opencv-python>=4.11.0.86",
     "picamera2>=0.3.33",
     "py5>=0.10.6a0",
 ]
